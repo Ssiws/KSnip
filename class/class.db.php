@@ -31,6 +31,13 @@ class db
 		)");
 		$sqlQuery->execute();
 		
+		$sqlQuery=$bdd->prepare("CREATE TABLE \"tblUser\" (
+			`PKUser`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+			`UserName`	TEXT NOT NULL,
+			`UserPassword`	TEXT NOT NULL
+		)");
+		$sqlQuery->execute();
+		
 		$bdd->exec("INSERT INTO `tblLanguage` VALUES ('1','HTML','html','1','3');
 		INSERT INTO `tblLanguage` VALUES ('2','C#','csharp','1','1');
 		INSERT INTO `tblLanguage` VALUES ('3','PHP','php','1','2');
