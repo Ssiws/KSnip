@@ -1,4 +1,4 @@
 data
 banned.txt
-Ksnip.vsix
+*.vsix
 *.db
