@@ -8,6 +8,13 @@ require_once( "func/base.php");
 $pageTitle=_SETTINGS; 
 head($pageTitle);
 
+$db=(new db())->bdd;
+$sqlQuery=$db->prepare( 'SELECT UserPassword FROM tblUser LIMIT 1');
+$sqlQuery->execute();
+$userPass=$sqlQuery->fetchColumn();
+$db=null;
+$token=sha1($userPass);
+
 /* Setup */
 $languages=new languages();
 
@@ -68,6 +75,7 @@ if(isset($_POST['action'])){
 			<h2><?php echo _DL_EXT_TITLE ?></h2>
 			<p><?php echo _DL_EXT ?></p>
 			<p><?php echo _DL_EXT_DESCR ?></p>
+			<p><?php echo _DL_EXT_DESCR_TOKEN." <pre>$token</pre>" ?></p>
 		</div>
 	</div>
 
