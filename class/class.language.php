@@ -25,8 +25,8 @@ class language
 	}
 	public function addSnippet($title,$content){
 		$db=(new db())->bdd;
-		$title=htmlentities($title);
-		$content=htmlentities($content);
+		$title=htmlentities($title,ENT_QUOTES);
+		$content=htmlentities($content,ENT_QUOTES);
 		try{
 			$req = $db->prepare("INSERT INTO
 			tblSnippets (snipTitle, snipContent,snipLangID) 

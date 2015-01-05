@@ -19,6 +19,8 @@ class snippet
 	}
 	
 	public function modifySnippet($title,$content){
+		$title=htmlentities($title,ENT_QUOTES);
+		$content=htmlentities($content,ENT_QUOTES);
 		try{
 			$db=(new db())->bdd;
 			$sqlQuery=$db->prepare( 'UPDATE tblSnippets SET snipTitle=?,snipContent=? WHERE PKsnip='.$this->snipId);
