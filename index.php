@@ -22,9 +22,6 @@ if(isset($_GET['language'])){
 
 <body>
 	<?php 
-		if(!file_exists("data/data")){
-			setup();
-		}
 		getLanguageSelector()
 	?>
 	<div id="main">

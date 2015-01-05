@@ -96,6 +96,7 @@ function getLanguageSelector(){
 
 }
 function setup(){
+	mkdir("data");
 	$db=new db();
 	$db->setup();
 }

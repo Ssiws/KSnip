@@ -3,14 +3,19 @@
 	include 'class/class.db.php';
 	require_once('func/base.php');
 	head("Connexion");
+	
+	$needToSetup=false;
+	if(!file_exists("data/data")){
+		setup();
+		$needToSetup=true;
+	}
 	$db=(new db())->bdd;
 	$sqlQuery=$db->prepare( 'SELECT UserName,UserPassword FROM tblUser LIMIT 1');
 	$sqlQuery->execute();
 	$userinfos=$sqlQuery->fetchObject();
 	$db=null;
-
-	$needToSetup=false;
-	if(!$userinfos){
+	
+	if($needToSetup==true||$userinfos==false){
 		//No user
 		if(!isset($_POST['wantedLogin'])&&!isset($_POST['wantedPassword'])&&!isset($_POST['wantedPasswordConfirm'])){
 			$needToSetup=true;
