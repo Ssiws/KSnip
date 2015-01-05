@@ -74,6 +74,22 @@ function foot(){
 				'xml xhtml xslt html    @shBrushXml.js'
 			  ));
 			  SyntaxHighlighter.all();
+			  //Code to handle the 'tab' key when adding/editing snippet
+			  var textarea= document.querySelector('textarea');
+				textarea.onkeydown = function(e){
+					if(e.keyCode==9 || e.which==9){ //Tab
+						e.preventDefault();
+						var s = this.selectionStart;
+							if(window.event.shiftKey){
+								//if shift is pressed -> remove one tab
+								this.value = this.value.replace('\t','');
+								this.selectionEnd = s-1 //put cursor before start position
+							}else{
+							this.value = this.value.substring(0,this.selectionStart) + '\t' + this.value.substring(this.selectionEnd);
+							this.selectionEnd = s+1; //put cursor after start position
+							}
+						}
+					}
 			</script>
 			<div id='footInfo'>KSnip v0.1 - %.2f ms</div>
 		</body>
