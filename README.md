@@ -8,6 +8,7 @@ Installation
 	* PHP (minimum 5.6)
 	* SQLite extension
 	* Apache or IIS or Nginx 
-	* 
+
+
 Work in progress...
 stay tuned
