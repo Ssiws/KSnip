@@ -5,7 +5,7 @@ class db
     public $bdd;
     public function db(){
         try{
-			$this->bdd = new PDO('sqlite:data/data',null,null);
+			$this->bdd = new PDO('sqlite:data/data',null,null, array(PDO::ATTR_PERSISTENT => true));
 			$this->bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}catch (Exception $e){
 			die('Erreur de base de données : '.$e->getMessage());

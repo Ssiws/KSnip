@@ -66,6 +66,7 @@ class languages
 			$db=(new db())->bdd;
 			$req = $db->prepare('UPDATE tblLanguage SET langEnabled=1,langPosition=? WHERE PKlang=? AND langEnabled=0');
 			$req->execute(array($nextPositionInMenu,$langId));
+
 			$db=null;
 			return "Terminé !";
 		}
