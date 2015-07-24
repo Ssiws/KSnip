@@ -29,7 +29,7 @@ class snippet
 		}catch(Exception $e){
 			return "Erreur lors de la modification".$e->getMessage();
 		}
-		return "Modification OK";
+		return "OK";
 	}
 	
 	public function getTitle(){

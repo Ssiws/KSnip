@@ -5,11 +5,8 @@ require_once("class.language.php");
 //Gestion des languages de programmation
 class languages
 {
-	//constructeur
-    public function languages(){
-    }
 	
-    public function getAvailableLanguages() {
+    public static function getAvailableLanguages() {
 		$db=(new db())->bdd;
 		$sqlQuery=$db->prepare('SELECT * FROM tblLanguage WHERE langEnabled=1 ORDER BY langPosition ASC');
         $sqlQuery->execute();
@@ -23,7 +20,7 @@ class languages
 		return $languages;
 	}
 	
-	public function getDisabledLanguages() {
+	public static function getDisabledLanguages() {
 		$db=(new db())->bdd;
 		$sqlQuery=$db->prepare('SELECT * FROM tblLanguage WHERE langEnabled=0 ORDER BY langShortName');
         $sqlQuery->execute();
@@ -37,7 +34,7 @@ class languages
 		return $languages;
 	}
 	
-	public function getLanguageByName($name){
+	public static function getLanguageByName($name){
 		$db=(new db())->bdd;
 		$sqlQuery=$db->prepare('SELECT PKlang FROM tblLanguage WHERE langShortName="'.$name.'"');
         $sqlQuery->execute();
@@ -50,7 +47,7 @@ class languages
 		}
 	}
 	
-	public function getLanguageByPositionInMenu($pos){
+	public static function getLanguageByPositionInMenu($pos){
 		$db=(new db())->bdd;
 		$sqlQuery=$db->prepare('SELECT PKlang FROM tblLanguage WHERE langPosition="'.$pos.'"');
         $sqlQuery->execute();
@@ -59,12 +56,13 @@ class languages
 		if($requestedLanguageId==""){
 			return null;
 		}
-		return new language($requestedLanguageId);
+		$wantedLanguage=new language($requestedLanguageId);
+		return $wantedLanguage;
 	}
 	
-	public function enableLanguage($langId){
+	public static function enableLanguage($langId){
 		if(is_numeric($langId)){
-			$nextPositionInMenu=$this->getNextPositionCount();
+			$nextPositionInMenu=self::getNextPositionCount();
 			$db=(new db())->bdd;
 			$req = $db->prepare('UPDATE tblLanguage SET langEnabled=1,langPosition=? WHERE PKlang=? AND langEnabled=0');
 			$req->execute(array($nextPositionInMenu,$langId));
@@ -73,7 +71,7 @@ class languages
 		}
 	}
 	
-	private function getNextPositionCount(){
+	private static function getNextPositionCount(){
 		$db=(new db())->bdd;
 		$sqlQuery=$db->prepare('SELECT langPosition FROM tblLanguage WHERE langEnabled=1 ORDER BY langPosition DESC LIMIT 1');
 		$sqlQuery->execute();
@@ -81,9 +79,9 @@ class languages
 		$db=null;
 		return $lastPos+1;
 	}
-	public function cleanupPositionCount(){
+	public static function cleanupPositionCount(){
 		$count=1;
-		foreach ($this->getAvailableLanguages() as $lang){
+		foreach (self::getAvailableLanguages() as $lang){
 			$lang->changePositionInMenu($count);
 			$count++;
 		}

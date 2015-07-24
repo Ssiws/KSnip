@@ -22,6 +22,10 @@ input[type="submit"]{
 	height: 30px;
 	min-width: 30px;
 }
+#registerButton{
+	margin-left:100px;
+	width:140px;
+}
 input[name="snipTitle"],textarea{
 	width:90%;
 }

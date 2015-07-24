@@ -36,7 +36,7 @@ class language
 			$db=null;
 			return ("Erreur lors de l'ajout."+$e->getMessage());
 		}
-		return "Terminé!";
+		return "OK";
 	}
 	public function changePositionInMenu($newPosition){
 		if($newPosition>0){

@@ -112,7 +112,7 @@ class Session
         self::banInit();
         if (self::banCanLogin()) {
             if ($login === $loginTest && password_verify($passwordTest,$password)) {
-                self::banLoginOk();
+				self::banLoginOk();
                 // Generate unique random number to sign forms (HMAC)
                 $_SESSION['uid'] = sha1(uniqid('', true).'_'.mt_rand());
                 $_SESSION['ip'] = self::_allIPs();

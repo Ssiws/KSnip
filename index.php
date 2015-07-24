@@ -1,16 +1,5 @@
 <?php 
-include 'class/class.session.php'; 
-Session::init();
-if (!Session::isLogged()) {
-	header('Location: login.php');
-}
-
-require_once( "func/base.php");
-$pageTitle=_HOME;
-head($pageTitle);
-
-/* Setup */
-$languages=new languages();
+require("init.php");
 
 /* Get User Choice*/
 if(isset($_GET['language'])){
@@ -18,35 +7,84 @@ if(isset($_GET['language'])){
 		$choosenLanguage=$_GET['language'];
 	}
 }
-?>
 
-<body>
-	<?php 
-		getLanguageSelector()
-	?>
-	<div id="main">
-			<?php 
-				
-				if(isset($choosenLanguage)){
-						$selectedLang=new Language($choosenLanguage);
-						$langDisplayName=$selectedLang->getDisplayName();
-						$langId=$selectedLang->getLanguageId();
-						if($langDisplayName!=""){
-							printf("<h1>%s: %s</h1>",_LANGUAGE, $langDisplayName);
-							printf("<p class='addSnippet'><a href='addsnippet.php?lang=%d'>%s</a></p>",$langId,_ADD_SNIPPET);
-							$snippetsForCurrentLanguage=$selectedLang->getSnippets();
-							echo "<ul class='snipList'>";
-							foreach($snippetsForCurrentLanguage as $snippet){
-								echo "<li><a href='viewsnippet.php?snip=".$snippet->getId()."'>".$snippet->getTitle()."</a></li>\n";
-							}
-							echo "</ul>";
-						}else{
-							echo _INVALID_LANGUAGE;
-						}
-					}else if($languages->getAvailableLanguages()==array()){
-						//Tous les langages sont désactivés dans les paramères...
-						printf("<h1>%s</h1>",_ALL_LANGUAGES_DISABLED);
-					}
-				?>
-		</div>
-<?php foot();
+
+if(isset($_GET['mode'])){
+	$mode=$_GET['mode'];
+}else{
+	$mode="";
+}
+switch($mode){
+	case "addsnippet":
+		if(isset($choosenLanguage)){
+			$selectedLang=new Language($choosenLanguage);
+			$smarty->assign("selectedLanguage",$selectedLang);
+			if(isset($_POST['snipTitle']) && isset($_POST['snipContent'])){
+				$title=$_POST['snipTitle'];
+				$content=$_POST['snipContent'];
+				$result=$selectedLang->addSnippet($title,$content);
+				$smarty->assign("result",$result);
+			}
+		}
+		$smarty->display("addsnippet.tpl");
+		break;
+	case "viewsnippet":
+		if(isset($_GET['snip'])&&is_numeric($_GET['snip'])){
+			try{
+			$snippet=new Snippet($_GET['snip']);
+			$language=new Language($snippet->getLanguageId());
+			$languageShortName=$language->getShortName();
+			
+			$smarty->assign("language",$languageShortName);
+			$smarty->assign("snippet",$snippet);
+			$smarty->display("viewsnippet.tpl");
+			}catch(Exception $e){
+				echo _ERR_INVALID_SNIPPET;
+			}
+		}
+		break;
+	case "deletesnippet":
+		if(isset($_GET['snipId'])){
+			if(is_numeric($_GET['snipId'])){
+				$snippetToDelete=new snippet($_GET['snipId']);
+				$smarty->assign("snippetToDelete",$snippetToDelete);
+				$smarty->display("deletesnippet.tpl");
+			}
+		}
+		if(isset($_POST['confirm'])){
+			$langId=$snippetToDelete->getLanguageId();
+			$snippetToDelete->deleteSnippet();
+			header('Location: index.php?language='.$langId);
+		}
+		break;
+	case "editsnippet":
+		if(isset($_GET['snip'])){
+			if(is_numeric($_GET['snip'])){
+				if(isset($_POST['snipTitle'])&&isset($_POST['snipContent'])){
+					$snippet=new snippet($_GET['snip']);
+					$title=$_POST['snipTitle'];
+					$content=$_POST['snipContent'];
+					$resultat=$snippet->modifySnippet($title,$content);
+					$smarty->assign("resultat",$resultat);
+				}
+				$snippetToEdit=new snippet($_GET['snip']);
+				$smarty->assign("snippetToEdit",$snippetToEdit);
+				$smarty->display("editsnippet.tpl");
+			}
+		}
+		if(isset($_POST['confirm'])){
+			$langId=$snippetToDelete->getLanguageId();
+			$snippetToDelete->deleteSnippet();
+			header('Location: index.php?language='.$langId);
+		}
+		break;
+	default:
+		if(isset($choosenLanguage)){
+			$selectedLang=new Language($choosenLanguage);
+			$smarty->assign("selectedLanguage",$selectedLang);
+		}
+		$smarty->display("index.tpl");
+		break;
+}
+
+?>
