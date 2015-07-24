@@ -1,3 +1,4 @@
 data
 banned.txt
 *.db
+*.tpl.php
