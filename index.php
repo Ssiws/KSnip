@@ -35,7 +35,10 @@ if(CheckSetup()!="AskCreateLogin"){
 					$result=$selectedLang->addSnippet($title,$content,$tags);
 					$smarty->assign("result",$result);
 				}
+				$languageShortName=$selectedLang->getShortName();
+				$smarty->assign("langHighlight",$languageShortName);
 			}
+			
 			$smarty->display("addsnippet.tpl");
 			break;
 		case "viewsnippet":
@@ -45,7 +48,8 @@ if(CheckSetup()!="AskCreateLogin"){
 				$language=new Language($snippet->getLanguageId());
 				$languageShortName=$language->getShortName();
 				
-				$smarty->assign("language",$languageShortName);
+				$smarty->assign("langHighlight",$languageShortName);
+				$smarty->assign("highlightReadOnly",true);
 				$smarty->assign("snippet",$snippet);
 				$smarty->display("viewsnippet.tpl");
 				}catch(Exception $e){
@@ -68,28 +72,33 @@ if(CheckSetup()!="AskCreateLogin"){
 			}
 			break;
 		case "editsnippet":
-			if(isset($_GET['snip'])){
-				if(is_numeric($_GET['snip'])){
-					if(isset($_POST['snipTitle'])&&isset($_POST['snipContent'])){
-						$snippet=new snippet($_GET['snip']);
-						$title=$_POST['snipTitle'];
-						$content=$_POST['snipContent'];
-						
-						$tags=$_POST['snipTags'];
-						$tagsCleanup=explode(";",$tags);
-						for($i=0;$i<count($tagsCleanup);$i++){
-							$tagsCleanup[$i]=trim($tagsCleanup[$i]);	
-						}
-						$tags=implode(";",$tagsCleanup);
-						$tags=trim($tags,";");
-						
-						$resultat=$snippet->modifySnippet($title,$content,$tags);
-						$smarty->assign("resultat",$resultat);
+			if(isset($_GET['snip'])&& is_numeric($_GET['snip'])){
+				if(isset($_POST['snipTitle'])&&isset($_POST['snipContent'])){
+					$snippet=new snippet($_GET['snip']);
+					
+					$title=$_POST['snipTitle'];
+					$content=$_POST['snipContent'];
+					
+					$tags=$_POST['snipTags'];
+					$tagsCleanup=explode(";",$tags);
+					for($i=0;$i<count($tagsCleanup);$i++){
+						$tagsCleanup[$i]=trim($tagsCleanup[$i]);	
 					}
-					$snippetToEdit=new snippet($_GET['snip']);
-					$smarty->assign("snippetToEdit",$snippetToEdit);
-					$smarty->display("editsnippet.tpl");
+					$tags=implode(";",$tagsCleanup);
+					$tags=trim($tags,";");
+					
+					$resultat=$snippet->modifySnippet($title,$content,$tags);
+					$smarty->assign("resultat",$resultat);
 				}
+
+				$snippetToEdit=new snippet($_GET['snip']);
+				
+				$language=new Language($snippetToEdit->getLanguageId());
+				$languageShortName=$language->getShortName();
+				$smarty->assign("langHighlight",$languageShortName);
+
+				$smarty->assign("snippetToEdit",$snippetToEdit);
+				$smarty->display("editsnippet.tpl");
 			}
 			if(isset($_POST['confirm'])){
 				$langId=$snippetToDelete->getLanguageId();

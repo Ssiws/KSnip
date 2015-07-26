@@ -12,14 +12,17 @@
 			{/if}
 			{else}
 				<h1>{_EDIT_SNIPPET}: {$snippetToEdit->getTitle()}</h1>
-				<form method="post">
+				
+				<form method="post" onsubmit="document.getElementsByName('snipContent')[0].value=editor.getValue()">
 				<p>{_TITLE}</p>
 				<p><input required type='text' name='snipTitle' value='{$snippetToEdit->getTitle()}'/></p>
 				<p>{_CODE}: </p>
-				<textarea cols="80" rows="25" name="snipContent">{$snippetToEdit->getContent()}</textarea>
+				<input type="hidden" name="snipContent"/>
+				<!--<textarea cols="80" rows="25" name="snipContent">{$snippetToEdit->getContent()}</textarea>-->
+				<div id="editor">{$snippetToEdit->getContent()}</div>
 				<p>Tags (Séparés par des points-virgules) : </p>
 				<p><input type='text' name='snipTags' value='{$snippetToEdit->getTags()}'/></p>
-				<p><input type="submit" value="{_EDIT}" /></p>			
+				<p><input type="submit" value="{_EDIT}"/></p>			
 				</form>
 		{/if}
 	{/if}

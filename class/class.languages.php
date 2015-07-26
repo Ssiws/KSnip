@@ -22,7 +22,7 @@ class languages
 	
 	public static function getDisabledLanguages() {
 		$db=(new db())->bdd;
-		$sqlQuery=$db->prepare('SELECT * FROM tblLanguage WHERE langEnabled=0 ORDER BY langShortName');
+		$sqlQuery=$db->prepare('SELECT * FROM tblLanguage WHERE langEnabled=0 ORDER BY langDisplayName');
         $sqlQuery->execute();
 		$languagesFromDb=$sqlQuery->fetchAll();
 		$languages=array(); //contiendra les objets de type "language"
