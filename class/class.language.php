@@ -47,17 +47,20 @@ class language
 		}
 	}
 	
-	public function getSnippets(){
+	public function getSnippets($wantedTag=""){
 		if(isset($this->languageId)){
 			$db=(new db())->bdd;
-			$sqlQuery=$db->prepare( 'SELECT PKsnip FROM tblSnippets WHERE snipLangID='.$this->languageId);
-        	$sqlQuery->execute();
+			$sqlQuery=$db->prepare( 'SELECT PKsnip FROM tblSnippets WHERE snipLangID=?');
+        	$sqlQuery->execute(array($this->languageId));
 			$snippets=$sqlQuery->fetchAll();
 			
 			$snips=array();
 			foreach($snippets as $snippet){
 				$oneSnippet=new snippet($snippet["PKsnip"]);
-				array_push($snips,$oneSnippet);
+				$arrayTags=explode(";",$oneSnippet->getTags()); //On met tous les tags du snippet dans un tableau
+				if(in_array($wantedTag, $arrayTags)||$wantedTag==""){ //Si le tag recherché est sur le snippet OU si on ne recherche pas de tag précis => Ajout
+					array_push($snips,$oneSnippet);
+				}
 			}
 			$db=null;
 			return $snips;

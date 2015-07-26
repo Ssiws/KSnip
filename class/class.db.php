@@ -18,7 +18,8 @@ class db
 			`PKsnip`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 			`snipLangID`	INTEGER NOT NULL,
 			`snipContent`	TEXT,
-			`snipTitle`	TEXT
+			`snipTitle`	TEXT,
+			`snipTags`	TEXT
 		);");
 		$sqlQuery->execute();
 		

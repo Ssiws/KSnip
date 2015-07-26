@@ -2,10 +2,13 @@
 	{block name="title"}{_HOME}{/block}
 	{block name="maincontent"}
 		{if isset($selectedLanguage) && $selectedLanguage->getDisplayName()!=""}
-			<h1>{$selectedLanguage->getDisplayName()}</h1>
-			<p class='addSnippet'><a href='index.php?mode=addsnippet&amp;language={$selectedLanguage->getLanguageId()}'>{_ADD_SNIPPET}</a></p>
+			{assign "langId" $selectedLanguage->getLanguageId()}
+			{assign "langName" $selectedLanguage->getDisplayName()}
+			<h1>{$langName}</h1>
+			{if $wantedTag!=""}<h2>{_SNIPPET_WITH_THE_TAG} "{$wantedTag|escape}" {_IN} {$langName} <a href='?language={$langId}'>({_SHOW_ALL} {$langName})</a></h2>{/if}
+			<p class='addSnippet'><a href='index.php?mode=addsnippet&amp;language={$langId}'>{_ADD_SNIPPET}</a></p>
 			<ul class='snipList'>
-				{foreach $selectedLanguage->getSnippets() as $OneSnippet}
+				{foreach $selectedLanguage->getSnippets($wantedTag) as $OneSnippet}
 					<li>
 						<a href='index.php?mode=viewsnippet&amp;snip={$OneSnippet->getId()}'>{$OneSnippet->getTitle()}</a>
 						{assign var=Tags value=";"|explode:$OneSnippet->getTags()}
@@ -13,7 +16,7 @@
 							<div class="tags">
 								<img src="img/tag.png"/>
 								{foreach $Tags as $OneTag}
-									<a href="#">{$OneTag|escape}</a>
+									<a href="?language={$langId}&amp;tag={$OneTag|escape:'url'}">{$OneTag|escape}</a>
 								{/foreach}
 							</div>
 						{/if}

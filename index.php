@@ -8,7 +8,6 @@ if(isset($_GET['language'])){
 	}
 }
 
-
 if(isset($_GET['mode'])){
 	$mode=$_GET['mode'];
 }else{
@@ -101,6 +100,10 @@ switch($mode){
 		if(isset($choosenLanguage)){
 			$selectedLang=new Language($choosenLanguage);
 			$smarty->assign("selectedLanguage",$selectedLang);
+			$smarty->assign("wantedTag","");
+			if(isset($_GET['tag'])){
+				$smarty->assign("wantedTag",$_GET['tag']);
+			}
 		}
 		$smarty->display("index.tpl");
 		break;

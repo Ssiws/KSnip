@@ -4,7 +4,7 @@
 		{if isset($result)}
 			{if $result=="OK"}
 				<h1>{_ADDED}</h1>
-				<p><a href='index.php?language={$selectedLanguage->getLanguageId()}'>Retourner à {$selectedLanguage->getDisplayName()} </a></p>
+				<p><a href='index.php?language={$selectedLanguage->getLanguageId()}'>{_BACK_TO} {$selectedLanguage->getDisplayName()} </a></p>
 				{else}
 				<h1>{$result}</h1>
 			{/if}

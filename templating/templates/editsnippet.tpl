@@ -4,10 +4,10 @@
 	{if isset($snippetToEdit)}
 		{if isset($resultat)}
 			{if $resultat=="OK"}
-				<h1>Modification effectuée!</h1>
-				<a href="index.php?mode=viewsnippet&snip={$snippetToEdit->getId()}">Afficher ce snippet</a>
+				<h1>{_EDIT_DONE}</h1>
+				<a href="index.php?mode=viewsnippet&snip={$snippetToEdit->getId()}">{_SHOW_THIS_SNIPPET}</a>
 				{else}
-				<h1>Erreur</h1>
+				<h1>{_ERROR}</h1>
 				<p>{$resultat}</p>
 			{/if}
 			{else}
