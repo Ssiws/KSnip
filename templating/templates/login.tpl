@@ -16,12 +16,12 @@
 				<p>{$resultat}</p>
 			{else}
 			<form id="loginForm" method="POST">
-				{if isset($needToSetup)}
+				{if isset($mustCreateLogin)}
 					<p>Pour commencer, choisissez un nom d'utilisateur et un mot de passe</p>
 				{/if}
 				<label>Login :</label><input required type="text" name="login" /> <br />
 			  	<label>Password :</label><input required type="password" name="password" /><br />
-		  		{if isset($needToSetup)}
+		  		{if isset($mustCreateLogin)}
 					<label>Password :</label><input required type="password" name="passwordConfirm" /><br />
 				{/if}
 		  		{if isset($needToSetup)}
