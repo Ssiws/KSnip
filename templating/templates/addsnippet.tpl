@@ -16,6 +16,8 @@
 					<p><input required type="text" name="snipTitle" autocomplete="off" /></p>
 					<p>{_CODE} :</p>
 					<textarea cols="80" rows="25" name="snipContent"></textarea>
+					<p>Tags: </p>
+					<p><input type='text' name='snipTags'/></p>
 					<p><input type="submit" value="{_ADD}" /></p>			
 				</form>
 			{/if}

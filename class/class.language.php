@@ -23,15 +23,15 @@ class language
 		$sqlQuery->execute();
 		$db=null;
 	}
-	public function addSnippet($title,$content){
+	public function addSnippet($title,$content,$tags=""){
 		$db=(new db())->bdd;
 		$title=htmlentities($title,ENT_QUOTES);
 		$content=htmlentities($content,ENT_QUOTES);
 		try{
 			$req = $db->prepare("INSERT INTO
-			tblSnippets (snipTitle, snipContent,snipLangID) 
-			VALUES(?, ?, ?)");
-			$req->execute(array($title, $content,$this->languageId));
+			tblSnippets (snipTitle, snipContent,snipLangID,snipTags) 
+			VALUES(?, ?, ?, ?)");
+			$req->execute(array($title, $content,$this->languageId,$tags));
 		}catch(Exception $e){
 			$db=null;
 			return ("Erreur lors de l'ajout."+$e->getMessage());

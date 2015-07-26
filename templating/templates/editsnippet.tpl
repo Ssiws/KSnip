@@ -17,6 +17,8 @@
 				<p><input required type='text' name='snipTitle' value='{$snippetToEdit->getTitle()}'/></p>
 				<p>{_CODE}: </p>
 				<textarea cols="80" rows="25" name="snipContent">{$snippetToEdit->getContent()}</textarea>
+				<p>Tags (Séparés par des points-virgules) : </p>
+				<p><input type='text' name='snipTags' value='{$snippetToEdit->getTags()}'/></p>
 				<p><input type="submit" value="{_EDIT}" /></p>			
 				</form>
 		{/if}

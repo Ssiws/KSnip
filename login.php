@@ -48,5 +48,5 @@ if(!file_exists("data/data")){
 			header('Location: index.php');
 		}
 	}
-	$smarty->display("login.tpl"); //Installation
+	$smarty->display("login.tpl");
 ?>

@@ -5,6 +5,7 @@ class snippet
 	private $snipId;
 	private $snippetTitle;
 	private $snippetContent;
+	private $snippetTags;
 	private $snippetLanguageId;
 
 	public function snippet($snipId){
@@ -18,13 +19,13 @@ class snippet
 		$db=null;
 	}
 	
-	public function modifySnippet($title,$content){
+	public function modifySnippet($title,$content,$tags=""){
 		$title=htmlentities($title,ENT_QUOTES);
 		$content=htmlentities($content,ENT_QUOTES);
 		try{
 			$db=(new db())->bdd;
-			$sqlQuery=$db->prepare( 'UPDATE tblSnippets SET snipTitle=?,snipContent=? WHERE PKsnip='.$this->snipId);
-			$sqlQuery->execute(array($title,$content));
+			$sqlQuery=$db->prepare( 'UPDATE tblSnippets SET snipTitle=?,snipContent=?,snipTags=? WHERE PKsnip='.$this->snipId);
+			$sqlQuery->execute(array($title,$content,$tags));
 			$db=null;
 		}catch(Exception $e){
 			return "Erreur lors de la modification".$e->getMessage();
@@ -54,6 +55,18 @@ class snippet
 			$this->snippetContent=$sqlQuery->fetchColumn();
 			$db=null;
 			return $this->snippetContent;
+		}
+	}
+	public function getTags(){
+		if(isset($this->snippetTags)){
+			return $this->snippetTags;
+		}else{
+			$db=(new db())->bdd;
+			$sqlQuery=$db->prepare( 'SELECT snipTags FROM tblSnippets WHERE PKsnip='.$this->snipId);
+        	$sqlQuery->execute();
+			$this->snippetTags=$sqlQuery->fetchColumn();
+			$db=null;
+			return $this->snippetTags;
 		}
 	}
 	public function getLanguageId(){

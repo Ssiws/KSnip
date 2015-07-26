@@ -1,7 +1,7 @@
 {extends file='base.tpl'}
 	{block name="title"}{_SETTINGS}{/block}
 	{block name="maincontent"}
-		<h1>{_SETTINGS}</h1>
+		<h1>{_SETTINGS} - KSnip v0.2</h1>
 		<div class='bloc'>
 			<h2>{_ENABLE_A_LANGUAGE}</h2>
 			{if !empty(languages::getDisabledLanguages())}

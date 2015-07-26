@@ -3,10 +3,21 @@
 	{block name="maincontent"}
 		{if isset($selectedLanguage) && $selectedLanguage->getDisplayName()!=""}
 			<h1>{$selectedLanguage->getDisplayName()}</h1>
-			<p class='addSnippet'><a href='index.php?mode=addsnippet&language={$selectedLanguage->getLanguageId()}'>{_ADD_SNIPPET}</a></p>
+			<p class='addSnippet'><a href='index.php?mode=addsnippet&amp;language={$selectedLanguage->getLanguageId()}'>{_ADD_SNIPPET}</a></p>
 			<ul class='snipList'>
 				{foreach $selectedLanguage->getSnippets() as $OneSnippet}
-					<li><a href='index.php?mode=viewsnippet&snip={$OneSnippet->getId()}'>{$OneSnippet->getTitle()}</a></li>
+					<li>
+						<a href='index.php?mode=viewsnippet&amp;snip={$OneSnippet->getId()}'>{$OneSnippet->getTitle()}</a>
+						{assign var=Tags value=";"|explode:$OneSnippet->getTags()}
+						{if !empty($Tags[0])}
+							<div class="tags">
+								<img src="img/tag.png"/>
+								{foreach $Tags as $OneTag}
+									<a href="#">{$OneTag|escape}</a>
+								{/foreach}
+							</div>
+						{/if}
+					</li>
 				{/foreach}
 			</ul>
 		{/if}

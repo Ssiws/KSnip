@@ -22,7 +22,17 @@ switch($mode){
 			if(isset($_POST['snipTitle']) && isset($_POST['snipContent'])){
 				$title=$_POST['snipTitle'];
 				$content=$_POST['snipContent'];
-				$result=$selectedLang->addSnippet($title,$content);
+				
+				$tags=$_POST['snipTags'];
+				$tagsCleanup=explode(";",$tags);
+				for($i=0;$i<count($tagsCleanup);$i++){
+					$tagsCleanup[$i]=trim($tagsCleanup[$i]);	
+				}
+				$tags=implode(";",$tagsCleanup);
+				$tags=trim($tags,";");
+				
+				$tags=$_POST['snipTags'];
+				$result=$selectedLang->addSnippet($title,$content,$tags);
 				$smarty->assign("result",$result);
 			}
 		}
@@ -64,7 +74,16 @@ switch($mode){
 					$snippet=new snippet($_GET['snip']);
 					$title=$_POST['snipTitle'];
 					$content=$_POST['snipContent'];
-					$resultat=$snippet->modifySnippet($title,$content);
+					
+					$tags=$_POST['snipTags'];
+					$tagsCleanup=explode(";",$tags);
+					for($i=0;$i<count($tagsCleanup);$i++){
+						$tagsCleanup[$i]=trim($tagsCleanup[$i]);	
+					}
+					$tags=implode(";",$tagsCleanup);
+					$tags=trim($tags,";");
+					
+					$resultat=$snippet->modifySnippet($title,$content,$tags);
 					$smarty->assign("resultat",$resultat);
 				}
 				$snippetToEdit=new snippet($_GET['snip']);
