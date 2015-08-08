@@ -59,7 +59,7 @@ class Session
         if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
             $ssl = true;
         }
-        session_set_cookie_params($cookie['lifetime'], $cookiedir, $_SERVER['HTTP_HOST'], $ssl);
+        session_set_cookie_params($cookie['lifetime'], $cookiedir/*, $_SERVER['HTTP_HOST'], $ssl*/); //Désactivation du domaine du cookie et du cookie sécurisé car problème en cas de reverse proxy
         // Use cookies to store session.
         ini_set('session.use_cookies', 1);
         // Force cookies for session  (phpsessionID forbidden in URL)
@@ -123,7 +123,6 @@ class Session
                 foreach ($pValues as $key => $value) {
                     $_SESSION[$key] = $value;
                 }
-
                 return true;
             }
             self::banLoginFailed();
@@ -147,10 +146,8 @@ class Session
      */
     public static function isLogged()
     {
-        if (!isset ($_SESSION['uid'])
-            || (self::$disableSessionProtection === false
-                && $_SESSION['ip'] !== self::_allIPs())
-            || time() >= $_SESSION['expires_on']) {
+        if (!isset ($_SESSION['uid'])|| (self::$disableSessionProtection === false&& $_SESSION['ip'] !== self::_allIPs())
+        || time() >= $_SESSION['expires_on']) {
             self::logout();
 
             return false;

@@ -37,7 +37,8 @@ class db
 		$sqlQuery=$bdd->prepare("CREATE TABLE IF NOT EXISTS \"tblUser\" (
 			`PKUser`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 			`UserName`	TEXT NOT NULL,
-			`UserPassword`	TEXT NOT NULL
+			`UserPassword`	TEXT NOT NULL,
+			`UserLanguage`	TEXT NOT NULL
 		)");
 		$sqlQuery->execute();
 		

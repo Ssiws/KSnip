@@ -1,6 +1,7 @@
 <?php
 define("_HOME","Accueil");
 define("_IN","dans");
+define("_LOGON","Connexion");
 define("_SHOW_ALL","Afficher tout");
 define("_BACK_TO","Retourner à");
 define("_LANGUAGE","Langage");

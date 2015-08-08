@@ -8,8 +8,8 @@ if(CheckSetup()=="AskCreateLogin"){
 		if($_POST['password'] === $_POST['passwordConfirm']){
 			try{
 				$db=(new db())->bdd;
-				$sqlQuery=$db->prepare( 'INSERT INTO tblUser VALUES (NULL,?,?)');
-				$sqlQuery->execute(array($_POST['login'],password_hash($_POST['password'],PASSWORD_DEFAULT)));
+				$sqlQuery=$db->prepare( 'INSERT INTO tblUser VALUES (NULL,?,?,?)');
+				$sqlQuery->execute(array($_POST['login'],password_hash($_POST['password'],PASSWORD_DEFAULT),"fr"));
 				$db=null;
 				$resultat="Login créé avec succès ! <a href='login.php'>Login !</a>";
 				$smarty->assign("resultat",$resultat);
