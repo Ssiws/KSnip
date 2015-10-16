@@ -39,3 +39,4 @@ define("_DL_EXT_DESCR","This extension allows you to send code in KSnip from the
 define("_DL_EXT_DESCR_TOKEN","Here's your token, he is used to allow the extension to authenticate in KSnip:");
 define("_ERR_INVALID_TOKEN","Error: Bad Token");
 define("_ERR_INVALID_PARAMS","Error: Invalid parameters");
+define("_FILTER_VIEW","Filter");

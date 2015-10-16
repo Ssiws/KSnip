@@ -40,6 +40,25 @@
 				{/if}	    
 			</script>
 		{/if}
+		
+		{* Fonction qui permet de filtrer en live la vue *}
+		<script type="text/javascript">
+			var input = document.getElementById('input');
+			input.onkeyup = function() {
+				var filter = input.value.toUpperCase();
+				var lis = document.getElementsByClassName('snippet');
+				
+				for(var i=0; i<lis.length; i++) {
+					var name = lis.item(i).textContent.trim();
+					if (name.toUpperCase().indexOf(filter) != -1){
+						lis[i].style.display = 'list-item';
+					}
+					else{
+						lis[i].style.display = 'none';
+					}
+				}
+			}
+		</script>
 		</div>
 </body>
 </html>
