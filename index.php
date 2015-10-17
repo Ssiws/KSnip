@@ -19,39 +19,35 @@ if(CheckSetup()!="AskCreateLogin"){
 			if(isset($choosenLanguage)){
 				$selectedLang=new Language($choosenLanguage);
 				$smarty->assign("selectedLanguage",$selectedLang);
+				
 				if(isset($_POST['snipTitle']) && isset($_POST['snipContent'])){
 					$title=$_POST['snipTitle'];
 					$content=$_POST['snipContent'];
 					
 					$tags=$_POST['snipTags'];
-					$tagsCleanup=explode(";",$tags);
+					$tagsCleanup=explode(";",$tags); //tableau qui contiens les tags "nettoyés"
+					
 					for($i=0;$i<count($tagsCleanup);$i++){
 						$tagsCleanup[$i]=trim($tagsCleanup[$i]);	
 					}
+					
 					$tags=implode(";",$tagsCleanup);
 					$tags=trim($tags,";");
-					
 					$tags=$_POST['snipTags'];
+					
 					$result=$selectedLang->addSnippet($title,$content,$tags);
 					$smarty->assign("result",$result);
 				}
-				$languageShortName=$selectedLang->getShortName();
-				$smarty->assign("langHighlight",$languageShortName);
 			}
 			
 			$smarty->display("addsnippet.tpl");
 			break;
 		case "viewsnippet":
-			if(isset($_GET['snip'])&&is_numeric($_GET['snip'])){
+			if(isset($_GET['snip']) && is_numeric($_GET['snip'])){
 				try{
-				$snippet=new Snippet($_GET['snip']);
-				$language=new Language($snippet->getLanguageId());
-				$languageShortName=$language->getShortName();
-				
-				$smarty->assign("langHighlight",$languageShortName);
-				$smarty->assign("highlightReadOnly",true);
-				$smarty->assign("snippet",$snippet);
-				$smarty->display("viewsnippet.tpl");
+					$snippet=new Snippet($_GET['snip']);
+					$smarty->assign("snippet",$snippet);
+					$smarty->display("viewsnippet.tpl");
 				}catch(Exception $e){
 					echo _ERR_INVALID_SNIPPET;
 				}
@@ -72,10 +68,9 @@ if(CheckSetup()!="AskCreateLogin"){
 			}
 			break;
 		case "editsnippet":
-			if(isset($_GET['snip'])&& is_numeric($_GET['snip'])){
-				if(isset($_POST['snipTitle'])&&isset($_POST['snipContent'])){
+			if(isset($_GET['snip'])&& is_numeric($_GET['snip'])){ //Si le snippet est valide
+				if(isset($_POST['snipTitle'])&&isset($_POST['snipContent'])){ //Si le user a validé une modification
 					$snippet=new snippet($_GET['snip']);
-					
 					$title=$_POST['snipTitle'];
 					$content=$_POST['snipContent'];
 					
@@ -88,22 +83,33 @@ if(CheckSetup()!="AskCreateLogin"){
 					$tags=trim($tags,";");
 					
 					$resultat=$snippet->modifySnippet($title,$content,$tags);
-					$smarty->assign("resultat",$resultat);
+					
+					if ($resultat=="OK"){
+						//Si la modification est OK, on affiche directement le snippet
+						$smarty->assign("snippet",$snippet);
+						$smarty->display("viewsnippet.tpl");
+					}else{
+						//Sinon, il y a eu une erreur et on affiche le résultat
+						$smarty->assign("resultat",$resultat);
+						$snippetToEdit=new snippet($_GET['snip']);
+						
+						$language=new Language($snippetToEdit->getLanguageId());
+						$languageShortName=$language->getShortName();
+						
+						$smarty->assign("langHighlight",$languageShortName);
+						$smarty->assign("snippetToEdit",$snippetToEdit);
+						$smarty->display("editsnippet.tpl");
+					}
+				}else{ //Affiche la page de modification au user
+					$snippetToEdit=new snippet($_GET['snip']);
+					
+					$language=new Language($snippetToEdit->getLanguageId());
+					$languageShortName=$language->getShortName();
+					
+					$smarty->assign("langHighlight",$languageShortName);
+					$smarty->assign("snippetToEdit",$snippetToEdit);
+					$smarty->display("editsnippet.tpl");
 				}
-
-				$snippetToEdit=new snippet($_GET['snip']);
-				
-				$language=new Language($snippetToEdit->getLanguageId());
-				$languageShortName=$language->getShortName();
-				$smarty->assign("langHighlight",$languageShortName);
-
-				$smarty->assign("snippetToEdit",$snippetToEdit);
-				$smarty->display("editsnippet.tpl");
-			}
-			if(isset($_POST['confirm'])){
-				$langId=$snippetToDelete->getLanguageId();
-				$snippetToDelete->deleteSnippet();
-				header('Location: index.php?language='.$langId);
 			}
 			break;
 		default:

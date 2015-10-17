@@ -81,6 +81,10 @@ class snippet
 			return $this->snippetLanguageId;
 		}
 	}
+	public function getLanguage(){
+		return new Language($this->getLanguageId());
+		
+	}
 	public function getId(){
 		return $this->snipId;
 	}

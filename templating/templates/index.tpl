@@ -6,7 +6,9 @@
 			{assign "langName" $selectedLanguage->getDisplayName()}
 			<h1>{$langName}</h1>
 			{if $wantedTag!=""}<h2>{_SNIPPET_WITH_THE_TAG} "{$wantedTag|escape}" {_IN} {$langName} <a href='?language={$langId}'>({_SHOW_ALL} {$langName})</a></h2>{/if}
-			<p class='addSnippet'><a href='index.php?mode=addsnippet&amp;language={$langId}'>{_ADD_SNIPPET}</a></p>
+			<p class='addSnippet'>
+				<a href='index.php?mode=addsnippet&amp;language={$langId}'><img src='img/add.png' width="15px"/> {_ADD_SNIPPET}</a>
+			</p>
 			{_FILTER_VIEW}: <input type="text" id="input"/>
 			<ul class='snipList'>
 				{foreach $selectedLanguage->getSnippets($wantedTag) as $OneSnippet}
