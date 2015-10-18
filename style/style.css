@@ -20,7 +20,7 @@ h1{
 input,textarea{
 	background-color: #34495e;
 	color:#FFF;
-	border:1px solid #34495e;
+	border:1px solid #2c3e50;
 }
 input[type="submit"]{
 	height: 30px;
