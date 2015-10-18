@@ -1,5 +1,6 @@
 <?php
 require_once( "class/class.languages.php");
+require_once('locale/fr.php');
 
 if(!isset($_POST['code'])||!isset($_POST['language'])||!isset($_POST['filename'])||!isset($_POST['token'])){
 	echo _ERR_INVALID_PARAMS;

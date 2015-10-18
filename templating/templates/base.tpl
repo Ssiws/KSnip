@@ -12,7 +12,7 @@
 		<ul>
 			{foreach languages::getAvailableLanguages() as $OneLanguage}
 				<li>
-					<a href='index.php?language={$OneLanguage->getLanguageID()}'>
+					<a href='index.php?language={$OneLanguage->getLanguageID()}' {if isset($selectedLanguageID) && $selectedLanguageID==$OneLanguage->getLanguageID()}class="selected"{/if}>
 						{$OneLanguage->getDisplayName()}
 					</a>
 				</li>

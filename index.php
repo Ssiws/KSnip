@@ -47,6 +47,7 @@ if(CheckSetup()!="AskCreateLogin"){
 				try{
 					$snippet=new Snippet($_GET['snip']);
 					$smarty->assign("snippet",$snippet);
+					$smarty->assign("selectedLanguageID",$snippet->getLanguageId());
 					$smarty->display("viewsnippet.tpl");
 				}catch(Exception $e){
 					echo _ERR_INVALID_SNIPPET;
@@ -58,14 +59,18 @@ if(CheckSetup()!="AskCreateLogin"){
 				if(is_numeric($_GET['snipId'])){
 					$snippetToDelete=new snippet($_GET['snipId']);
 					$smarty->assign("snippetToDelete",$snippetToDelete);
-					$smarty->display("deletesnippet.tpl");
+					$smarty->assign("selectedLanguageID",$snippetToDelete->getLanguageId());
+					
+					if(isset($_POST['confirm'])){
+						$langId=$snippetToDelete->getLanguageId();
+						$snippetToDelete->deleteSnippet();
+						header('Location: index.php?language='.$langId);
+					}else{
+						$smarty->display("deletesnippet.tpl");
+					}
 				}
 			}
-			if(isset($_POST['confirm'])){
-				$langId=$snippetToDelete->getLanguageId();
-				$snippetToDelete->deleteSnippet();
-				header('Location: index.php?language='.$langId);
-			}
+			
 			break;
 		case "editsnippet":
 			if(isset($_GET['snip'])&& is_numeric($_GET['snip'])){ //Si le snippet est valide
@@ -87,6 +92,7 @@ if(CheckSetup()!="AskCreateLogin"){
 					if ($resultat=="OK"){
 						//Si la modification est OK, on affiche directement le snippet
 						$smarty->assign("snippet",$snippet);
+						$smarty->assign("selectedLanguageID",$snippet->getLanguageId());
 						$smarty->display("viewsnippet.tpl");
 					}else{
 						//Sinon, il y a eu une erreur et on affiche le résultat
@@ -107,6 +113,7 @@ if(CheckSetup()!="AskCreateLogin"){
 					$languageShortName=$language->getShortName();
 					
 					$smarty->assign("langHighlight",$languageShortName);
+					$smarty->assign("selectedLanguageID",$language->getLanguageId());
 					$smarty->assign("snippetToEdit",$snippetToEdit);
 					$smarty->display("editsnippet.tpl");
 				}
@@ -116,6 +123,7 @@ if(CheckSetup()!="AskCreateLogin"){
 			if(isset($choosenLanguage)){
 				$selectedLang=new Language($choosenLanguage);
 				$smarty->assign("selectedLanguage",$selectedLang);
+				$smarty->assign("selectedLanguageID",$selectedLang->getLanguageId());
 				$smarty->assign("wantedTag","");
 				if(isset($_GET['tag'])){
 					$smarty->assign("wantedTag",$_GET['tag']);

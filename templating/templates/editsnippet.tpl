@@ -16,7 +16,7 @@
 				<form method="post" onsubmit="document.getElementsByName('snipContent')[0].value=editor.getValue()">
 					<p>{_TITLE}</p>
 					<p><input required type='text' name='snipTitle' value='{$snippetToEdit->getTitle()}'/></p>
-					<p>{_CODE}: </p>
+					<p>{_CODE}</p>
 					<input type="hidden" name="snipContent"/>
 					<div id="editor">{$snippetToEdit->getContent()}</div>
 					<p>Tags (Séparés par des points-virgules) : </p>

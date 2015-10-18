@@ -1,6 +1,6 @@
 body {
   font-family: sans-serif;
-	background-color:#2c3e50;
+	background-color:#252525;
 	color:#FFF;
 	margin:0;
 	display: flex;
@@ -11,16 +11,19 @@ a {
 	color:#FFF;
 	text-decoration: none;
 }
-
+.code{
+	max-width: 100vh;
+}
 h1{
 	margin-top: 11px;
 	border-bottom: 2px solid #FFF;
 }
 
 input,textarea{
-	background-color: #34495e;
+	background-color: black;
 	color:#FFF;
-	border:1px solid #34495e;
+	border:1px solid #063967;
+	box-shadow: 0px 0px 20px #063967;
 }
 input[type="submit"]{
 	height: 30px;
@@ -45,13 +48,15 @@ input[name="snipTitle"],input[name="snipTags"],textarea{
 	z-index: 2;
 }
 #languagesSelector li>a {
-    background: #162c40;;
+    background: linear-gradient(#063967,#162c40);
 	display: inline-block;
 	height: 40px;
     width: 100%;
     padding-top: 20px;
 	margin-bottom: 5px;
 	text-align: center;
+	border-radius: 3px;
+	box-shadow: 2px 5px 5px #111;
 	text-decoration: none;
 }
 #settingsButton{
@@ -78,16 +83,14 @@ input[name="snipTitle"],input[name="snipTags"],textarea{
 	margin-left:100px;
 	width:145px;
 }
-#editor{
-	width:90%;
-	height:70vh;
-}
 
 .snipList li{
 	list-style: none;
 	margin-bottom: 10px;
 	background-color: #162c40;
 	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 5px 3px 6px #555;
 	margin-right: 20px;
 }
 .tags{
@@ -115,10 +118,10 @@ input[name="snipTitle"],input[name="snipTags"],textarea{
 	width:400px;
 	margin:10px 0 20px 10px;
 	padding:0 2px 5px 2px;
-	border:2px solid #FFF;
+	border:2px solid #063967;
 	min-height: 300px;
 }
-
-.selected{
-		box-shadow: inset -5px 0 0 0px #3D8EB9;
+#editor{
+	width:90%;
+	height:70vh;
 }
