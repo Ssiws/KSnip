@@ -22,7 +22,7 @@ if(!isset($_POST['code'])||!isset($_POST['language'])||!isset($_POST['filename']
 		$lang=$languages->getLanguageByName($languageOfFile);
 		if($lang!=null){
 			$languages->enableLanguage($lang->getLanguageId()); //Activer le langage si ce n'est pas déjà le cas
-			$lang->addSnippet("From Visual Studio: ".$fileName,urldecode($codeReceived));
+			$lang->addSnippet("From Visual Studio: ".$fileName,$codeReceived);
 			printf("%s: %s",_ADDED_TO,$lang->getDisplayName(true));
 		}else{
 			echo _ERR_INVALID_LANGUAGE;

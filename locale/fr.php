@@ -34,7 +34,7 @@ define("_DISABLE_AND_DELETE_SNIPPETS","Désactiver et effacer tous les snippets 
 define("_SNIPPET","Snippet");
 define("_SNIPPET_WITH_THE_TAG","Snippets avec le tag");
 define("_DL_EXT_TITLE","Télécharger l'extension");
-define("_DL_EXT","Télécharger <a href='vsExtension/Ksnip.vsix'>l'extension pour Visual Studio</a>");
+define("_DL_EXT","Télécharger <a href='vsExtension/Ksnip.vsix' class='underlined'>l'extension pour Visual Studio</a>");
 define("_DL_EXT_DESCR","L'extension pour Visual Studio permet d'envoyer du code directement dans KSnip depuis le menu 'Outils'");
 define("_DL_EXT_DESCR_TOKEN","Voici votre token, à utiliser dans l'extension pour autoriser l'ajout de code:");
 define("_ERR_INVALID_TOKEN","Erreur: Token invalide");

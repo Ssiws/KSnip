@@ -11,7 +11,7 @@ if(CheckSetup()=="AskCreateLogin"){
 				$sqlQuery=$db->prepare( 'INSERT INTO tblUser VALUES (NULL,?,?,?)');
 				$sqlQuery->execute(array($_POST['login'],password_hash($_POST['password'],PASSWORD_DEFAULT),"fr"));
 				$db=null;
-				$resultat="Login créé avec succès ! <a href='login.php'>Login !</a>";
+				$resultat="Login créé avec succès ! <a href='login.php'>Cliquez ici pour vous connecter.</a>";
 				$smarty->assign("resultat",$resultat);
 			}catch(Exception $e){
 				$resultat="Erreur dans la création du login: ".$e->getMessage();

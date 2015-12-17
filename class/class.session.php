@@ -51,10 +51,10 @@ class Session
         // Force cookie path (but do not change lifetime)
         $cookie = session_get_cookie_params();
         // Default cookie expiration and path.
-        $cookiedir = '';
-        if (dirname($_SERVER['SCRIPT_NAME'])!='/') {
+        $cookiedir = '/';
+        /*if (dirname($_SERVER['SCRIPT_NAME'])!='/') {
             $cookiedir = dirname($_SERVER["SCRIPT_NAME"]).'/';
-        }
+        }*/
         $ssl = false;
         if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
             $ssl = true;
