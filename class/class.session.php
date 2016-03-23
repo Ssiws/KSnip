@@ -28,7 +28,7 @@
 class Session
 {
     // Personnalize PHP session name
-    public static $sessionName = '';
+    public static $sessionName = 'ksnip';
     // If the user does not access any page within this time,
     // his/her session is considered expired (3600 sec. = 1 hour)
     public static $inactivityTimeout = 3600;
@@ -36,7 +36,7 @@ class Session
     // Let you disable session cookie hijacking protection
     public static $disableSessionProtection = false;
     // Ban IP after this many failures.
-    public static $banAfter = 4;
+    public static $banAfter = 5;
     // Ban duration for IP address after login failures (in seconds).
     // (1800 sec. = 30 minutes)
     public static $banDuration = 1800;
@@ -51,10 +51,11 @@ class Session
         // Force cookie path (but do not change lifetime)
         $cookie = session_get_cookie_params();
         // Default cookie expiration and path.
-        $cookiedir = '/';
-        /*if (dirname($_SERVER['SCRIPT_NAME'])!='/') {
+        $cookiedir = '';
+        if (dirname($_SERVER['SCRIPT_NAME'])!='/') {
             $cookiedir = dirname($_SERVER["SCRIPT_NAME"]).'/';
-        }*/
+        }
+        $cookiedir="/";
         $ssl = false;
         if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
             $ssl = true;

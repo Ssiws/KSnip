@@ -3,7 +3,7 @@
 class db
 {
     public $bdd;
-    public function db(){
+    public function __construct(){
         try{
     		$file=glob("data/*.dbid")[0];
     		$dbId=trim(explode('/',$file)[1],".dbid");

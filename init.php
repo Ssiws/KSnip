@@ -13,7 +13,7 @@ if(!isset($bypassLoginCheck)){
 }
 
 class SmartySnip extends Smarty{
-	function SmartySnip(){
+	function __construct(){
 		parent::__construct(); 
 	    $this->template_dir = 'templating/templates/';
 	    $this->compile_dir  = 'templating/templates_c/';

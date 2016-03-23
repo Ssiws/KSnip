@@ -8,7 +8,7 @@ class language
 	private $languageDisplayName;
 	
 	//constructeur
-    public function language($id){
+    public function __construct($id){
 		$this->languageId=$id;
 		$this->languageDisplayName=$this->getDisplayName();
 		$this->languageShortName=$this->getShortName();

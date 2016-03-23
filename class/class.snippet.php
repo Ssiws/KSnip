@@ -8,7 +8,7 @@ class snippet
 	private $snippetTags;
 	private $snippetLanguageId;
 
-	public function snippet($snipId){
+	public function __construct($snipId){
 		$this->snipId=$snipId;
 	}
     // déclaration des méthodes
