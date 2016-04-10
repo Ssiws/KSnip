@@ -55,7 +55,6 @@ function changePos($language,$oldPosition,$targetPosition){
 	if($targetPosition!=$oldPosition){
 		$languageAlreadyInTargetPos=languages::getLanguageByPositionInMenu($targetPosition);
 		if($languageAlreadyInTargetPos!=null){
-			//var_dump($languageAlreadyInTargetPos);
 			$languageAlreadyInTargetPos->changePositionInMenu($oldPosition);
 			$language->changePositionInMenu($targetPosition);
 		}
