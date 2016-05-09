@@ -5,8 +5,10 @@ require_once('locale/fr.php');
 if (isset($_POST['action']) && isset($_POST['token'])) {
 	$action=$_POST['action'];
 }else{
-	echo _ERR_INVALID_PARAMS;
-	die();
+	if(!isset($_POST['token'])){
+		echo _ERR_INVALID_PARAMS;
+		die();
+	}
 }
 
 switch ($action) {
