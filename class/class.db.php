@@ -9,10 +9,23 @@ class db
     		$dbId=trim(explode('/',$file)[1],".dbid");
 			$this->bdd = new PDO("sqlite:data/$dbId",null,null, array(PDO::ATTR_PERSISTENT => true));
 			$this->bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			checkIfUpgrade1Needed();
 		}catch (Exception $e){
 			die('Erreur de base de données : '.$e->getMessage());
 		}
     }
+	
+	private function checkIfUpgrade1Needed(){
+		$sqlQuery=$this->bdd->prepare('SELECT count(*) FROM tblLanguage WHERE langShortName=xaml');
+		$sqlQuery->execute();
+		$isXAMLExisting=$sqlQuery->fetchColumn();
+		if($isXAMLExisting >= 1){
+			return false;
+		}else{
+			$this->bdd->exec("INSERT INTO `tblLanguage` VALUES ('35','XAML','xaml','0','0');");
+		}
+	}
+	
 	public function setup(){
 		$bdd=$this->bdd;
 		$sqlQuery=$bdd->prepare("
@@ -76,6 +89,7 @@ class db
 		INSERT INTO `tblLanguage` VALUES ('32','Objective-C','objectivec','0','0');
 		INSERT INTO `tblLanguage` VALUES ('33','Assembly-x86','assembly_x86','0','0');
 		INSERT INTO `tblLanguage` VALUES ('34','VHDL','vhdl','0','0');
+		INSERT INTO `tblLanguage` VALUES ('35','XAML','xaml','0','0');
 		");
 	}
 }
