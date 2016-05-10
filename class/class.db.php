@@ -9,7 +9,7 @@ class db
     		$dbId=trim(explode('/',$file)[1],".dbid");
 			$this->bdd = new PDO("sqlite:data/$dbId",null,null, array(PDO::ATTR_PERSISTENT => true));
 			$this->bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			checkIfUpgrade1Needed();
+			$this->checkIfUpgrade1Needed();
 		}catch (Exception $e){
 			die('Erreur de base de données : '.$e->getMessage());
 		}
